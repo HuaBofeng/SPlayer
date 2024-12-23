@@ -10,7 +10,7 @@
     "electron/main/index.d.ts",
     "electron/preload/index.d.ts",
     "electron/preload/index.ts"
-  ],
+, "dist/lastfm.ts"  ],
   "compilerOptions": {
     "composite": true,
     "types": ["electron-vite/node"]

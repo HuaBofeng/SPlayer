@@ -10,6 +10,12 @@
         </div>
         <n-switch class="set" v-model:value="settingStore.showLocalCover" :round="false" />
       </n-card>
+      <n-card class="set-item">
+        <div class="label">
+          <n-text class="name">显示本地默认歌曲目录</n-text>
+        </div>
+        <n-switch class="set" v-model:value="settingStore.showDefaultLocalPath" :round="false" />
+      </n-card>
       <n-card class="set-item" id="local-list-choose" content-style="flex-direction: column">
         <n-flex justify="space-between">
           <div class="label">

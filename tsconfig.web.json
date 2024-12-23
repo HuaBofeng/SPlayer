@@ -6,7 +6,7 @@
     "src/**/*.vue",
     "electron/main/index.d.ts",
     "electron/preload/index.d.ts"
-  ],
+, "dist/lastfm.ts"  ],
   "compilerOptions": {
     "composite": true,
     "maxNodeModuleJsDepth": 2,

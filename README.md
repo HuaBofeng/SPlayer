@@ -1,6 +1,12 @@
 # SPlayer
 
-> 一个简约的音乐播放器
+> A simple music player
+
+![Stars](https://img.shields.io/github/stars/imsyy/SPlayer?style=flat)
+![Version](https://img.shields.io/github/v/release/imsyy/SPlayer)
+[![Build Release](https://github.com/imsyy/SPlayer/actions/workflows/release.yml/badge.svg)](https://github.com/imsyy/SPlayer/actions/workflows/release.yml)
+![License](https://img.shields.io/github/license/imsyy/SPlayer)
+![Issues](https://img.shields.io/github/issues/imsyy/SPlayer)
 
 ![main](/screenshots/SPlayer.jpg)
 

@@ -86,6 +86,7 @@ interface SettingState {
   dynamicCover: boolean;
   useKeepAlive: boolean;
   excludeKeywords: string[];
+  showDefaultLocalPath: boolean;
 }
 
 export const useSettingStore = defineStore("setting", {
@@ -148,6 +149,7 @@ export const useSettingStore = defineStore("setting", {
     excludeKeywords: keywords, // 排除歌词关键字
     // 本地
     localFilesPath: [],
+    showDefaultLocalPath: true, // 显示默认本地路径
     localSeparators: ["/", "&"],
     showLocalCover: true,
     // 下载

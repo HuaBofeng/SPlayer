@@ -273,9 +273,11 @@ export const changeLocalPath = async (delIndex?: number) => {
       // 检查是否为子文件夹
       const defaultMusicPath = await window.electron.ipcRenderer.invoke("get-default-dir", "music");
       const allPath = [defaultMusicPath, ...settingStore.localFilesPath];
-      const isSubfolder = allPath.some((existingPath) => {
-        return selectedDir.startsWith(existingPath);
-      });
+      const isSubfolder = await window.electron.ipcRenderer.invoke(
+        "check-if-subfolder",
+        allPath,
+        selectedDir,
+      );
       if (!isSubfolder) {
         settingStore.localFilesPath.push(selectedDir);
       } else {

@@ -106,7 +106,14 @@
           <template #prefix>
             <SvgIcon :size="20" name="FolderMusic" />
           </template>
-          <n-thing :title="defaultMusicPath" description="系统默认音乐文件夹，无法更改" />
+          <template #suffix>
+            <n-switch
+              v-model:value="settingStore.showDefaultLocalPath"
+              :round="false"
+              class="set"
+            />
+          </template>
+          <n-thing :title="defaultMusicPath" description="系统默认音乐文件夹" />
         </n-list-item>
         <n-list-item v-for="(item, index) in settingStore.localFilesPath" :key="index">
           <template #prefix>
@@ -176,7 +183,10 @@ const listData = computed<SongType[]>(() => {
 // 获取音乐文件夹
 const getMusicFolder = async (): Promise<string[]> => {
   defaultMusicPath.value = await window.electron.ipcRenderer.invoke("get-default-dir", "music");
-  return [defaultMusicPath.value, ...settingStore.localFilesPath];
+  return [
+    settingStore.showDefaultLocalPath ? defaultMusicPath.value : "",
+    ...settingStore.localFilesPath,
+  ];
 };
 
 // 全部音乐大小
@@ -262,7 +272,7 @@ localEventBus.on(() => getAllLocalMusic());
 
 // 本地目录变化
 watch(
-  () => settingStore.localFilesPath,
+  () => [settingStore.localFilesPath, settingStore.showDefaultLocalPath],
   async () => await getAllLocalMusic(),
   { deep: true },
 );

@@ -34,7 +34,7 @@ const initNcmAPI = async (fastify: FastifyInstance) => {
   fastify.get("/netease", (_, reply) => {
     reply.send({
       name: "NeteaseCloudMusicApi",
-      version: "4.20.0",
+      version: "4.25.0",
       description: "网易云音乐 Node.js API service",
       author: "@binaryify",
       license: "MIT",

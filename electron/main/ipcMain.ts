@@ -174,7 +174,8 @@ const initWinIpcMain = (
   ipcMain.handle("get-music-files", async (_, dirPath: string) => {
     try {
       // 规范化路径
-      const filePath = resolve(dirPath);
+      const filePath = resolve(dirPath).replace(/\\/g, "/");
+      console.info(`📂 Fetching music files from: ${filePath}`);
       // 查找指定目录下的所有音乐文件
       const musicFiles = await fg("**/*.{mp3,wav,flac}", { cwd: filePath });
       // 解析元信息

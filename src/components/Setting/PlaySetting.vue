@@ -189,7 +189,13 @@
       <n-card class="set-item">
         <div class="label">
           <n-text class="name">音乐频谱</n-text>
-          <n-text class="tip" :depth="3">开启音乐频谱会极大影响性能，如遇问题请关闭</n-text>
+          <n-text class="tip" :depth="3">
+            {{
+              isElectron
+                ? "开启音乐频谱会影响性能或音频输出切换等功能，如遇问题请关闭"
+                : "开启可能会造成无法播放或其他问题，如遇任何问题请关闭"
+            }}
+          </n-text>
         </div>
         <n-switch
           class="set"

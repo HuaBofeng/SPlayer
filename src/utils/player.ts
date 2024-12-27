@@ -241,14 +241,17 @@ class Player {
     // 获取数据
     const dataStore = useDataStore();
     const statusStore = useStatusStore();
+    const settingStore = useSettingStore();
     const playSongData = this.getPlaySongData();
     // 获取配置
     const { seek } = options;
     // 初次加载
     this.player.once("load", () => {
       // 允许跨域
-      const audioDom = this.getAudioDom();
-      audioDom.crossOrigin = "anonymous";
+      if (settingStore.showSpectrums) {
+        const audioDom = this.getAudioDom();
+        audioDom.crossOrigin = "anonymous";
+      }
       // 恢复进度（ 需距离本曲结束大于 2 秒 ）
       if (seek && statusStore.duration - statusStore.currentTime > 2) this.setSeek(seek);
       // 更新状态

@@ -200,8 +200,8 @@ const getSongInfo = async () => {
     name: common.title || "",
     artist: common.artist || "",
     album: common.album || "",
-    alia: common.comment?.[0] || "",
-    lyric: common.lyrics?.[0] || "",
+    alia: (common.comment?.[0] as string) || "",
+    lyric: (common.lyrics?.[0] as unknown as string) || "",
     type: format.codec,
     duration: format.duration ? Number(format.duration.toFixed(2)) : 0,
     size: fileSize,
@@ -212,7 +212,7 @@ const getSongInfo = async () => {
   // 获取封面
   const coverBuff = common.picture?.[0]?.data || "";
   const coverType = common.picture?.[0]?.format || "";
-  if (coverBuff) coverData.value = blob.createBlobURL(coverBuff, coverType, path);
+  if (coverBuff) coverData.value = blob.createBlobURL(coverBuff as Buffer, coverType, path);
 };
 
 // 在线匹配

@@ -60,6 +60,7 @@ const { start: dynamicCoverStart, stop: dynamicCoverStop } = useTimeoutFn(
 const getDynamicCover = async () => {
   if (
     isLogin() !== 1 ||
+    musicStore.playSong.path ||
     !musicStore.playSong.id ||
     !settingStore.dynamicCover ||
     settingStore.playerType !== "cover"

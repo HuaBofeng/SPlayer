@@ -32,7 +32,7 @@
             </n-tag>
             <n-text :depth="3" class="time">{{ newVersion?.time }}</n-text>
           </n-flex>
-          <div class="markdown-body" v-html="newVersion?.changelog" />
+          <div class="markdown-body" v-html="newVersion?.changelog" @click="jumpLink" />
         </n-card>
       </n-collapse-transition>
     </div>
@@ -53,7 +53,7 @@
                 </n-tag>
                 <n-text :depth="3" class="time">{{ item?.time }}</n-text>
               </n-flex>
-              <div class="markdown-body" v-html="item?.changelog" />
+              <div class="markdown-body" v-html="item?.changelog" @click="jumpLink" />
             </n-card>
           </n-collapse-item>
         </n-collapse>
@@ -125,6 +125,16 @@ const checkUpdate = debounce(
   300,
   { leading: true, trailing: false },
 );
+
+// 链接跳转
+const jumpLink = (e: MouseEvent) => {
+  const target = e.target as HTMLElement;
+  if (target.tagName !== "A") {
+    return;
+  }
+  e.preventDefault();
+  openLink((target as HTMLAnchorElement).href);
+};
 
 // 获取更新日志
 const getUpdateData = async () => (updateData.value = await getUpdateLog());

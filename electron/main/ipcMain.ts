@@ -217,18 +217,19 @@ const initWinIpcMain = (
   // 获取音乐元信息
   ipcMain.handle("get-music-metadata", async (_, path: string) => {
     try {
-      const { common, format } = await parseFile(path);
+      const filePath = resolve(path).replace(/\\/g, "/");
+      const { common, format } = await parseFile(filePath);
       return {
         // 文件名称
-        fileName: basename(path),
+        fileName: basename(filePath),
         // 文件大小
-        fileSize: (await fs.stat(path)).size / (1024 * 1024),
+        fileSize: (await fs.stat(filePath)).size / (1024 * 1024),
         // 元信息
         common,
         // 音质信息
         format,
         // md5
-        md5: await getFileMD5(path),
+        md5: await getFileMD5(filePath),
       };
     } catch (error) {
       log.error("❌ Error fetching music metadata:", error);
@@ -239,24 +240,19 @@ const initWinIpcMain = (
   // 获取音乐歌词
   ipcMain.handle("get-music-lyric", async (_, path: string): Promise<string> => {
     try {
-      const { common, native } = await parseFile(path);
+      const filePath = resolve(path).replace(/\\/g, "/");
+      const { common } = await parseFile(filePath);
       const lyric = common?.lyrics;
       if (lyric && lyric.length > 0) return String(lyric[0]);
+      // 如果歌词数据不存在，尝试读取同名的 lrc 文件
       else {
-        // 尝试读取 UNSYNCEDLYRICS
-        const nativeTags = native["ID3v2.3"] || native["ID3v2.4"];
-        const usltTag = nativeTags?.find((tag) => tag.id === "USLT");
-        if (usltTag) return String(usltTag.value.text);
-        // 如果歌词数据不存在，尝试读取同名的 lrc 文件
-        else {
-          const lrcFilePath = path.replace(/\.[^.]+$/, ".lrc");
-          try {
-            await fs.access(lrcFilePath);
-            const lrcData = await fs.readFile(lrcFilePath, "utf-8");
-            return lrcData || "";
-          } catch {
-            return "";
-          }
+        const lrcFilePath = filePath.replace(/\.[^.]+$/, ".lrc");
+        try {
+          await fs.access(lrcFilePath);
+          const lrcData = await fs.readFile(lrcFilePath, "utf-8");
+          return lrcData || "";
+        } catch {
+          return "";
         }
       }
     } catch (error) {

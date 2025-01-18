@@ -1,9 +1,9 @@
 import { app, shell, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
-import { electronApp, optimizer } from "@electron-toolkit/utils";
+import { electronApp } from "@electron-toolkit/utils";
 import { join } from "path";
 import { release, type } from "os";
 import { isDev, isMac, appName } from "./utils";
-import { registerAllShortcuts, unregisterShortcuts } from "./shortcut";
+import { unregisterShortcuts } from "./shortcut";
 import { initTray, MainTray } from "./tray";
 import { initThumbar, Thumbar } from "./thumbar";
 import { type StoreType, initStore } from "./store";
@@ -75,8 +75,6 @@ class MainProcess {
         this.thumbar,
         this.store,
       );
-      // 注册快捷键
-      registerAllShortcuts(this.mainWindow!);
     });
   }
   // 创建窗口
@@ -216,11 +214,6 @@ class MainProcess {
     // 新增 session
     app.on("second-instance", () => {
       this.showWindow();
-    });
-
-    // 开发环境控制台
-    app.on("browser-window-created", (_, window) => {
-      optimizer.watchWindowShortcuts(window);
     });
 
     // 自定义协议

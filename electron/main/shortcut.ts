@@ -1,5 +1,4 @@
-import { BrowserWindow, globalShortcut } from "electron";
-import { isDev } from "./utils";
+import { globalShortcut } from "electron";
 import log from "../main/logger";
 
 // 注册快捷键并检查
@@ -28,16 +27,4 @@ export const isShortcutRegistered = (shortcut: string): boolean => {
 export const unregisterShortcuts = () => {
   globalShortcut.unregisterAll();
   log.info("🚫 All shortcuts unregistered.");
-};
-
-// 注册所有快捷键
-export const registerAllShortcuts = (win: BrowserWindow) => {
-  // 开启控制台
-  registerShortcut("CmdOrCtrl+Shift+I", () => {
-    win.webContents.openDevTools({
-      title: "SPlayer DevTools",
-      // 客户端分离
-      mode: isDev ? "right" : "detach",
-    });
-  });
 };
